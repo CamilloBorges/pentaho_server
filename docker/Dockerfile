@@ -1,7 +1,7 @@
 # Pentaho Server Community Edition Docker Image
-# Base: Debian Trixie Slim with OpenJDK 17 JRE (LTS compatible with Pentaho 9.4)
+# Base: Debian Bookworm Slim with OpenJDK 17 JRE (LTS compatible with Pentaho 9.4)
 
-FROM debian:trixie-slim
+FROM debian:bookworm-slim
 
 # Build arguments
 ARG PENTAHO_VERSION=9.4.0.0-343
