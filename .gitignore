@@ -1,0 +1,38 @@
+# Pentaho Server CE - Docker Environment
+# =============================================================================
+
+# Backup directories
+backups/
+
+# Docker volumes
+docker/stagedArtifacts/*.zip
+
+# Environment files
+.env
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# User configuration (customize as needed)
+config/.kettle/*
+config/.pentaho/*
+
+# Exchange directory
+softwareOverride/99_exchange/*

@@ -1,0 +1,97 @@
+Listagem de caminhos de pasta para o volume OS
+O número de série do volume é 00000060 62D5:F05F
+C:.
+|   .env.template
+|   .gitignore
+|   CHANGELOG.md
+|   docker-compose.dev.yml
+|   docker-compose.yml
+|   DOWNLOAD.md
+|   estrutura_projeto.txt
+|   Makefile
+|   PROJECT_INFO.md
+|   PROJECT_SUMMARY.md
+|   QUICKSTART.md
+|   README.md
+|   WINDOWS_SETUP.md
+|   
++---.vscode
+|       settings.json
+|       
++---backups
+|       README.md
+|       
++---config
+|   +---.kettle
+|   |       .gitkeep
+|   |       
+|   \---.pentaho
+|           .gitkeep
+|           
++---db_init_postgres
+|       1_create_jcr_postgres.sql
+|       2_create_quartz_postgres.sql
+|       3_create_repository_postgres.sql
+|       
++---docker
+|   |   Dockerfile
+|   |   
+|   +---entrypoint
+|   |       docker-entrypoint.sh
+|   |       
+|   \---stagedArtifacts
+|           .gitkeep
+|           
++---logs
+|       README.md
+|       
++---postgres-config
+|       custom.conf
+|       
++---scripts
+|       backup-postgres.sh
+|       deploy.sh
+|       restore-postgres.sh
+|       validate-deployment.sh
+|       
++---secrets
+|       postgres_password.txt
+|       
+\---softwareOverride
+    |   README.md
+    |   
+    +---1_drivers
+    |   |   README.md
+    |   |   
+    |   +---pentaho-solutions
+    |   |   \---system
+    |   |       \---kettle
+    |   \---tomcat
+    |       \---lib
+    +---2_repository
+    |   |   README.md
+    |   |   
+    |   +---pentaho-solutions
+    |   |   \---system
+    |   |       +---hibernate
+    |   |       +---jackrabbit
+    |   |       \---quartz
+    |   \---tomcat
+    |       \---webapps
+    |           \---pentaho
+    |               \---META-INF
+    +---3_security
+    |   |   README.md
+    |   |   
+    |   \---pentaho-solutions
+    |       \---system
+    +---4_others
+    |   |   README.md
+    |   |   
+    |   +---pentaho-solutions
+    |   |   \---system
+    |   \---tomcat
+    |       \---bin
+    \---99_exchange
+            README.md
+            

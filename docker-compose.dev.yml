@@ -1,0 +1,120 @@
+# =============================================================================
+# Pentaho Server CE - Docker Compose para Desenvolvimento
+# =============================================================================
+# Este arquivo fornece uma configuração alternativa com features de desenvolvimento
+# 
+# Uso:
+#   docker compose -f docker-compose.dev.yml up -d
+# =============================================================================
+
+version: '3.8'
+
+services:
+  # PostgreSQL Database (igual ao production)
+  postgres:
+    image: postgres:15-alpine
+    container_name: pentaho-postgres-dev
+    hostname: repository
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - pentaho_postgres_data_dev:/var/lib/postgresql/data
+      - ./db_init_postgres:/docker-entrypoint-initdb.d:ro
+      - ./postgres-config/custom.conf:/etc/postgresql/postgresql.conf:ro
+    ports:
+      - "5432:5432"
+    networks:
+      pentaho-net:
+        ipv4_address: 172.28.0.10
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # Pentaho Server CE - Modo Desenvolvimento
+  pentaho-server:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile
+      args:
+        PENTAHO_VERSION: ${PENTAHO_VERSION:-9.4.0.0-343}
+    container_name: pentaho-server-dev
+    hostname: pentaho
+    environment:
+      - PENTAHO_MIN_MEMORY=2048m
+      - PENTAHO_MAX_MEMORY=4096m
+      - POSTGRES_HOST=repository
+      - POSTGRES_PORT=5432
+      - POSTGRES_PASSWORD=password
+      - PENTAHO_USER=pentaho
+      - PENTAHO_PASSWORD=password
+      # Modo debug
+      - JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000
+    ports:
+      - "8080:8080"    # HTTP
+      - "8443:8443"    # HTTPS
+      - "8000:8000"    # Debug port
+    volumes:
+      # Volumes persistentes
+      - pentaho_solutions_dev:/opt/pentaho/pentaho-server/pentaho-solutions
+      - pentaho_data_dev:/opt/pentaho/pentaho-server/data
+      - ./config/.kettle:/home/pentaho/.kettle
+      - ./config/.pentaho:/home/pentaho/.pentaho
+      # Mount softwareOverride para desenvolvimento (hot reload)
+      - ./softwareOverride:/opt/pentaho/softwareOverride:ro
+      # Logs externos para fácil acesso
+      - ./logs:/opt/pentaho/pentaho-server/tomcat/logs
+    networks:
+      pentaho-net:
+        ipv4_address: 172.28.0.20
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/pentaho/Login || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 180s
+    restart: unless-stopped
+    # Removido read_only e tmpfs para permitir desenvolvimento
+    # Removido limites de recursos para desenvolvimento
+
+  # PgAdmin - Interface Web para PostgreSQL (opcional)
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pentaho-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@pentaho.local
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - pentaho-net
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+networks:
+  pentaho-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
+
+volumes:
+  pentaho_postgres_data_dev:
+    driver: local
+  pentaho_solutions_dev:
+    driver: local
+  pentaho_data_dev:
+    driver: local
+  pgadmin_data:
+    driver: local
