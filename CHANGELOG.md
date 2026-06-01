@@ -5,6 +5,22 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
+## [1.6.0] - 2026-06-01
+
+### Fixed
+- **CRÍTICO**: Configuração de Datasources PostgreSQL
+  - Problema: context.xml estava configurado para HSQLDB (H2) ao invés de PostgreSQL
+  - Sintoma: "EmbeddedQuartzSystemListener failed to start"
+  - Solução: Criado `docker/overrides/context.xml` com datasources PostgreSQL
+  - Datasources configurados: Quartz, JackRabbit, Hibernate, PDI_Operations_Mart
+  - Driver: `org.postgresql.Driver`
+  - URLs corretas: `jdbc:postgresql://repository:5432/{database}`
+  - Validação: `SELECT 1`
+
+### Added
+- Arquivo `docker/overrides/context.xml` - Tomcat datasource configuration
+- Cópia automática de context.xml durante Docker build
+
 ## [1.5.0] - 2026-06-01
 
 ### Changed
