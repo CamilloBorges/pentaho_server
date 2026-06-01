@@ -129,6 +129,32 @@ configure_database() {
 }
 
 # =============================================================================
+# Configure Tomcat Context XML (PostgreSQL Datasources)
+# =============================================================================
+configure_context_xml() {
+    log "Configuring Tomcat context.xml for PostgreSQL datasources..."
+    
+    local meta_inf_dir="$PENTAHO_HOME/tomcat/webapps/pentaho/META-INF"
+    local context_xml="$meta_inf_dir/context.xml"
+    local override_file="/tmp/context.xml.override"
+    
+    # Create META-INF directory if it doesn't exist
+    if [ ! -d "$meta_inf_dir" ]; then
+        log "Creating META-INF directory: $meta_inf_dir"
+        mkdir -p "$meta_inf_dir"
+    fi
+    
+    # Copy PostgreSQL context.xml if override file exists
+    if [ -f "$override_file" ]; then
+        log "Copying PostgreSQL context.xml to: $context_xml"
+        cp "$override_file" "$context_xml"
+        log "✓ Context.xml configured for PostgreSQL datasources"
+    else
+        log_warn "Override file not found: $override_file"
+    fi
+}
+
+# =============================================================================
 # Configure JVM Memory
 # =============================================================================
 configure_memory() {
@@ -173,6 +199,9 @@ main() {
     
     # Wait for PostgreSQL
     wait_for_postgres
+    
+    # Configure Tomcat context.xml (MUST be before Tomcat starts)
+    configure_context_xml
     
     # Configure database
     configure_database

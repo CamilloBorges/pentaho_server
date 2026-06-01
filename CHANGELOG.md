@@ -5,6 +5,20 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
+## [1.6.3] - 2025-06-01
+
+### Fixed
+- **CRÍTICO**: Context.xml sobrescrito pelo Tomcat (PostgreSQL não aplicado)
+  - Problema: Pentaho continuava usando HSQLDB ao invés de PostgreSQL
+  - Sintoma: "Database lock acquisition failure: /opt/data/hsqldb/quartz.lck"
+  - Causa: Context.xml copiado no Dockerfile é sobrescrito quando Tomcat desempacota pentaho.war
+  - Solução: Copiar context.xml no entrypoint ANTES de iniciar Tomcat
+  - Mudanças:
+    * Dockerfile: Context.xml copiado para `/tmp/context.xml.override` (temporário)
+    * Entrypoint: Nova função `configure_context_xml()` que copia no momento certo
+    * Função chamada no main() ANTES de `start_pentaho()`
+  - Arquivos: `docker/Dockerfile`, `docker/entrypoint/docker-entrypoint.sh`
+
 ## [1.6.2] - 2026-06-01
 
 ### Fixed
