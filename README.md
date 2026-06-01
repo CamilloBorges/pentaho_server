@@ -1,11 +1,16 @@
 # Pentaho Server Community Edition - Docker Deployment
 
+✅ **Status: OPERACIONAL** | **Testado e Funcionando** | Java 8 | Ubuntu 18.04
+
 ![Pentaho](https://img.shields.io/badge/Pentaho-CE%209.4-blue)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-336791)
 ![Docker](https://img.shields.io/badge/Docker-Compose-2496ED)
 ![License](https://img.shields.io/badge/License-Apache%202.0-green)
+![Java](https://img.shields.io/badge/Java-8-orange)
 
 Deployment completo e pronto para produção do Pentaho Server Community Edition com PostgreSQL usando Docker Compose.
+
+> **📢 IMPORTANTE:** Este deployment foi testado e validado com sucesso. Todos os containers healthy, HTTP endpoints funcionando. Veja [DEPLOYMENT_SUCCESS.md](DEPLOYMENT_SUCCESS.md) para detalhes completos da validação.
 
 ## 📋 Índice
 
