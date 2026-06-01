@@ -1,7 +1,7 @@
-# Pentaho Server Community Edition Docker Image
-# Base: Debian Bookworm Slim with OpenJDK 17 JRE (LTS compatible with Pentaho 9.4)
+# Pentaho Server Community Edition Docker Image  
+# Base: Debian Bullseye Slim with OpenJDK 11 JRE (compatible with Pentaho 9.4)
 
-FROM debian:bookworm-slim
+FROM debian:bullseye-slim
 
 # Build arguments
 ARG PENTAHO_VERSION=9.4.0.0-343
@@ -12,19 +12,19 @@ ARG PENTAHO_GID=5000
 # Labels
 LABEL maintainer="Your Organization"
 LABEL version="${PENTAHO_VERSION}"
-LABEL description="Pentaho Server Community Edition with PostgreSQL and Java 17"
+LABEL description="Pentaho Server Community Edition with PostgreSQL and Java 11"
 
 # Environment variables
 ENV PENTAHO_HOME=/opt/pentaho/pentaho-server
 ENV PENTAHO_VERSION=${PENTAHO_VERSION}
 ENV CATALINA_HOME=${PENTAHO_HOME}/tomcat
-ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 ENV PATH=${JAVA_HOME}/bin:${PENTAHO_HOME}:${PATH}
 
 # Install required packages
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-        openjdk-17-jre-headless \
+        openjdk-11-jre-headless \
         wget \
         curl \
         unzip \

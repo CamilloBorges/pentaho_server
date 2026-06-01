@@ -5,6 +5,16 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
+## [1.4.0] - 2026-06-01
+
+### Changed
+- **CRÍTICO**: Downgrade para Java 11 (Debian Bullseye)
+  - Java 17 ainda incompatível com Pentaho 9.4 OSGI/Karaf
+  - Erros persistem: "BundleException: Exported package names cannot be zero length"
+  - Mudança FROM `debian:bookworm-slim` → `debian:bullseye-slim`
+  - Java 11 é a versão LTS mais próxima do Java 8 (original do Pentaho 9.4)
+  - JAVA_HOME: `/usr/lib/jvm/java-11-openjdk-amd64`
+
 ## [1.3.0] - 2026-06-01
 
 ### Corrigido
