@@ -1,12 +1,13 @@
 # 🎉 Pentaho Server CE - Deployment Successful!
 
-## Deployment Status: ✅ OPERATIONAL
+## Deployment Status: ✅ FULLY OPERATIONAL
 
 **Date:** June 1, 2026  
 **Version:** Pentaho Server CE 9.4.0.0-343  
 **Java Version:** OpenJDK 1.8.0_362  
 **Base OS:** Ubuntu 18.04  
-**Server:** 191.101.70.239
+**Server:** 191.101.70.239  
+**Latest Update:** Quartz Scheduler PostgreSQL Configuration ✅
 
 ---
 
@@ -27,9 +28,17 @@ OpenJDK Runtime Environment (build 1.8.0_362-8u372-ga~us1-0ubuntu1~18.04-b09)
 OpenJDK 64-Bit Server VM (build 25.362-b09, mixed mode)
 ```
 
+### Quartz Scheduler Operational
+- ✅ **Database:** PostgreSQL (quartz database)
+- ✅ **Datasource:** JNDI `jdbc/Quartz` configured in context.xml
+- ✅ **Tables:** 11 Quartz tables created and accessible
+- ✅ **Driver:** PostgreSQL JDBC 42.7.4
+- ✅ **Initialization:** EmbeddedQuartzSystemListener started successfully
+
 ### HTTP Endpoints Working
 - **Direct Access:** http://191.101.70.239:8080/pentaho → HTTP 302 (redirect working)
-- **Nginx Proxy:** http://191.101.70.239/ → HTTP 200 OK
+- **Nginx Proxy:** http://191.101.70.239/pentaho → HTTP 200 OK
+- **Session Management:** JSESSIONID cookie generated ✅
 - **HTTPS (Nginx):** https://191.101.70.239/
 
 ---
