@@ -5,6 +5,16 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
+## [1.6.1] - 2026-06-01
+
+### Fixed
+- **CRÍTICO**: Prefixo das tabelas Quartz (QRTZ5_ vs qrtz_)
+  - Problema: Tabelas criadas com prefixo `qrtz_` mas Pentaho espera `QRTZ5_`
+  - Sintoma: "ERROR: relation 'qrtz5_triggers' does not exist"
+  - Causa: quartz.properties configurado com `org.quartz.jobStore.tablePrefix = QRTZ5_`
+  - Solução: Atualizado script SQL para criar tabelas com prefixo `QRTZ5_` (maiúsculas)
+  - Arquivos: `db_init_postgres/2_create_quartz_postgres.sql`
+
 ## [1.6.0] - 2026-06-01
 
 ### Fixed
