@@ -1,5 +1,5 @@
 # Pentaho Server Community Edition Docker Image
-# Base: Debian Trixie Slim with OpenJDK 21 JRE
+# Base: Debian Trixie Slim with OpenJDK 11 JRE (compatible with Pentaho 9.4)
 
 FROM debian:trixie-slim
 
@@ -12,19 +12,19 @@ ARG PENTAHO_GID=5000
 # Labels
 LABEL maintainer="Your Organization"
 LABEL version="${PENTAHO_VERSION}"
-LABEL description="Pentaho Server Community Edition with PostgreSQL"
+LABEL description="Pentaho Server Community Edition with PostgreSQL and Java 11"
 
 # Environment variables
 ENV PENTAHO_HOME=/opt/pentaho/pentaho-server
 ENV PENTAHO_VERSION=${PENTAHO_VERSION}
 ENV CATALINA_HOME=${PENTAHO_HOME}/tomcat
-ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
+ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 ENV PATH=${JAVA_HOME}/bin:${PENTAHO_HOME}:${PATH}
 
 # Install required packages
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-        openjdk-21-jre-headless \
+        openjdk-11-jre-headless \
         wget \
         curl \
         unzip \
@@ -61,14 +61,8 @@ RUN wget -q https://jdbc.postgresql.org/download/postgresql-42.7.4.jar \
     -O ${PENTAHO_HOME}/tomcat/lib/postgresql-42.7.4.jar && \
     chown ${PENTAHO_USER}:${PENTAHO_USER} ${PENTAHO_HOME}/tomcat/lib/postgresql-42.7.4.jar
 
-# Fix commons-pool compatibility issue with Java 21
-# Pentaho 9.4 ships with commons-pool 1.x which has classloader issues on Java 21
-# Download commons-pool2 2.12.0 to replace the old version
-RUN wget -q https://repo1.maven.org/maven2/org/apache/commons/commons-pool2/2.12.0/commons-pool2-2.12.0.jar \
-    -O ${PENTAHO_HOME}/tomcat/lib/commons-pool2-2.12.0.jar && \
-    chown ${PENTAHO_USER}:${PENTAHO_USER} ${PENTAHO_HOME}/tomcat/lib/commons-pool2-2.12.0.jar && \
-    # Remove old commons-pool 1.x if exists (prevents conflicts)
-    find ${PENTAHO_HOME}/tomcat/lib -name 'commons-pool-1*.jar' -delete 2>/dev/null || true
+# Note: commons-pool fix not needed for Java 11
+# Java 11 is fully compatible with Pentaho 9.4
 
 # Copy entrypoint script
 COPY entrypoint/docker-entrypoint.sh /usr/local/bin/
