@@ -597,6 +597,15 @@ docker run --rm \
   alpine tar czf /backup/solutions-volume-$(date +%Y%m%d).tar.gz -C /data .
 ```
 
+## 📚 Documentação Complementar
+
+- [VERSIONING.md](VERSIONING.md) - Explicação sobre a escolha da versão 9.4.0.0-343 vs 10+
+- [SYSTEM_REQUIREMENTS.md](SYSTEM_REQUIREMENTS.md) - Requisitos de sistema e otimização para recursos limitados
+- [NETWORK_ACCESS.md](NETWORK_ACCESS.md) - Configuração de acesso remoto e troubleshooting de rede
+- [TROUBLESHOOTING.md](TROUBLESHOOTING.md) - Guia completo de resolução de problemas comuns
+
+---
+
 ## 📚 Recursos e Suporte
 
 ### Documentação

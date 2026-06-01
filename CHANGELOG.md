@@ -4,6 +4,52 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
+## [1.2.0] - 2026-06-01
+
+### Corrigido
+- **IMPORTANTE**: Problema crítico de ClassLoader com commons-pool no Java 21
+  - Pentaho 9.4 usa commons-pool 1.x que é incompatível com Java 21
+  - Adicionado download automático de commons-pool2 2.12.0 no Dockerfile
+  - Remove versão antiga automaticamente para evitar conflitos
+- Container ficando unhealthy durante inicialização
+  - Aumentado start-period: 180s → 300s (5 minutos)
+  - Aumentado retries: 3 → 5
+  - Health check usa /pentaho/ ao invés de /pentaho/Login
+- Erro 404 intermitente durante startup
+
+### Adicionado
+- [TROUBLESHOOTING.md](TROUBLESHOOTING.md) - Guia completo de resolução de problemas
+- Script de diagnóstico completo (full-diagnose.sh)
+- Documentação detalhada do problema commons-pool
+- Procedimentos de reset e recuperação
+
+### Melhorado
+- Health check mais robusto e tolerante
+- Documentação de troubleshooting expandida
+- Scripts de diagnóstico mais completos
+## [1.2.0] - 2026-06-01
+
+### Corrigido
+- **IMPORTANTE**: Problema crítico de ClassLoader com commons-pool no Java 21
+  - Pentaho 9.4 usa commons-pool 1.x que é incompatível com Java 21
+  - Adicionado download automático de commons-pool2 2.12.0 no Dockerfile
+  - Remove versão antiga automaticamente para evitar conflitos
+- Container ficando unhealthy durante inicialização
+  - Aumentado start-period: 180s → 300s (5 minutos)
+  - Aumentado retries: 3 → 5
+  - Health check usa /pentaho/ ao invés de /pentaho/Login
+- Erro 404 intermitente durante startup
+
+### Adicionado
+- [TROUBLESHOOTING.md](TROUBLESHOOTING.md) - Guia completo de resolução de problemas
+- Script de diagnóstico completo (full-diagnose.sh)
+- Documentação detalhada do problema commons-pool
+- Procedimentos de reset e recuperação
+
+### Melhorado
+- Health check mais robusto e tolerante
+- Documentação de troubleshooting expandida
+- Scripts de diagnóstico mais completos
 
 ## [1.1.0] - 2024-06-01
 
@@ -19,9 +65,11 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
 ### Adicionado
 - [SYSTEM_REQUIREMENTS.md](SYSTEM_REQUIREMENTS.md) - Guia completo de requisitos e otimização
+- [NETWORK_ACCESS.md](NETWORK_ACCESS.md) - Configuração de acesso remoto e troubleshooting de rede
 - Configurações otimizadas para diferentes cenários (dev/teste/produção)
 - Guia de diagnóstico de problemas de recursos
 - Dicas de performance e tuning
+- Script de diagnóstico completo de rede
 
 ### Corrigido
 - Erro "range of CPUs is from 0.01 to 2.00" em sistemas com 2 CPUs
