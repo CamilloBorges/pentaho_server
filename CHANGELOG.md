@@ -5,6 +5,21 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
+## [1.6.4] - 2025-06-01
+
+### Fixed
+- **CRÍTICO**: Context.xml apagado por tmpfs mount
+  - Problema: Context.xml continuava com HSQLDB mesmo após correção da v1.6.3
+  - Sintoma: Arquivo /tmp/context.xml.override não encontrado pelo entrypoint
+  - Causa ROOT: `/tmp` é montado como tmpfs em RUNTIME (docker-compose.yml), apagando arquivos copiados no build
+  - Descoberta: `tmpfs: - /tmp:size=512m` sobrescreve todo conteúdo de /tmp quando container inicia
+  - Solução: Mover arquivo para `/opt/pentaho/context.xml.override` (fora do tmpfs)
+  - Mudanças:
+    * Dockerfile: COPY para `/opt/pentaho/context.xml.override` ao invés de `/tmp/`
+    * Entrypoint: `override_file="/opt/pentaho/context.xml.override"`
+  - Arquivos: `docker/Dockerfile`, `docker/entrypoint/docker-entrypoint.sh`
+  - **LIÇÃO APRENDIDA:** Nunca usar `/tmp` para arquivos que precisam persistir do build para o runtime quando tmpfs está configurado!
+
 ## [1.6.3] - 2025-06-01
 
 ### Fixed

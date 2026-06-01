@@ -61,9 +61,9 @@ RUN wget -q https://jdbc.postgresql.org/download/postgresql-42.7.4.jar \
     -O ${PENTAHO_HOME}/tomcat/lib/postgresql-42.7.4.jar && \
     chown ${PENTAHO_USER}:${PENTAHO_USER} ${PENTAHO_HOME}/tomcat/lib/postgresql-42.7.4.jar
 
-# Copy PostgreSQL datasource configuration to temp location (will be applied by entrypoint)
-COPY overrides/context.xml /tmp/context.xml.override
-RUN chown ${PENTAHO_USER}:${PENTAHO_USER} /tmp/context.xml.override
+# Copy PostgreSQL datasource configuration to persistent location (NOT tmpfs)
+COPY overrides/context.xml /opt/pentaho/context.xml.override
+RUN chown ${PENTAHO_USER}:${PENTAHO_USER} /opt/pentaho/context.xml.override
 
 # Note: Java 8 is the NATIVE version for Pentaho 9.4
 # Do not use Java 11, 17, or 21 - OSGI/Karaf incompatibility

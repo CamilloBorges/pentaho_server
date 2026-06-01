@@ -136,7 +136,7 @@ configure_context_xml() {
     
     local meta_inf_dir="$PENTAHO_HOME/tomcat/webapps/pentaho/META-INF"
     local context_xml="$meta_inf_dir/context.xml"
-    local override_file="/tmp/context.xml.override"
+    local override_file="/opt/pentaho/context.xml.override"
     
     # Create META-INF directory if it doesn't exist
     if [ ! -d "$meta_inf_dir" ]; then
