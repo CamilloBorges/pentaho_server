@@ -31,7 +31,8 @@ GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO pentaho_user;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO pentaho_user;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO pentaho_user;
 
--- Create Quartz tables with QRTZ5_ prefix (required by Pentaho 9.4)
+-- Create Quartz 1.7.x tables with QRTZ5_ prefix (required by Pentaho 9.4)
+-- IMPORTANT: Pentaho 9.4 uses Quartz 1.7.2, NOT Quartz 2.x
 CREATE TABLE QRTZ5_JOB_DETAILS (
     sched_name VARCHAR(120) NOT NULL,
     job_name VARCHAR(200) NOT NULL,
@@ -39,8 +40,8 @@ CREATE TABLE QRTZ5_JOB_DETAILS (
     description VARCHAR(250),
     job_class_name VARCHAR(250) NOT NULL,
     is_durable BOOLEAN NOT NULL,
-    is_nonconcurrent BOOLEAN NOT NULL,
-    is_update_data BOOLEAN NOT NULL,
+    is_volatile BOOLEAN NOT NULL,
+    is_stateful BOOLEAN NOT NULL,
     requests_recovery BOOLEAN NOT NULL,
     job_data BYTEA,
     PRIMARY KEY (sched_name, job_name, job_group)
@@ -63,6 +64,7 @@ CREATE TABLE QRTZ5_TRIGGERS (
     calendar_name VARCHAR(200),
     misfire_instr SMALLINT,
     job_data BYTEA,
+    is_volatile BOOLEAN NOT NULL,
     PRIMARY KEY (sched_name, trigger_name, trigger_group),
     FOREIGN KEY (sched_name, job_name, job_group) 
         REFERENCES QRTZ5_JOB_DETAILS(sched_name, job_name, job_group)
@@ -86,26 +88,6 @@ CREATE TABLE QRTZ5_CRON_TRIGGERS (
     trigger_group VARCHAR(200) NOT NULL,
     cron_expression VARCHAR(120) NOT NULL,
     time_zone_id VARCHAR(80),
-    PRIMARY KEY (sched_name, trigger_name, trigger_group),
-    FOREIGN KEY (sched_name, trigger_name, trigger_group) 
-        REFERENCES QRTZ5_TRIGGERS(sched_name, trigger_name, trigger_group)
-);
-
-CREATE TABLE QRTZ5_SIMPROP_TRIGGERS (
-    sched_name VARCHAR(120) NOT NULL,
-    trigger_name VARCHAR(200) NOT NULL,
-    trigger_group VARCHAR(200) NOT NULL,
-    str_prop_1 VARCHAR(512),
-    str_prop_2 VARCHAR(512),
-    str_prop_3 VARCHAR(512),
-    int_prop_1 INTEGER,
-    int_prop_2 INTEGER,
-    long_prop_1 BIGINT,
-    long_prop_2 BIGINT,
-    dec_prop_1 NUMERIC(13,4),
-    dec_prop_2 NUMERIC(13,4),
-    bool_prop_1 BOOLEAN,
-    bool_prop_2 BOOLEAN,
     PRIMARY KEY (sched_name, trigger_name, trigger_group),
     FOREIGN KEY (sched_name, trigger_name, trigger_group) 
         REFERENCES QRTZ5_TRIGGERS(sched_name, trigger_name, trigger_group)
@@ -141,13 +123,12 @@ CREATE TABLE QRTZ5_FIRED_TRIGGERS (
     trigger_group VARCHAR(200) NOT NULL,
     instance_name VARCHAR(200) NOT NULL,
     fired_time BIGINT NOT NULL,
-    sched_time BIGINT NOT NULL,
     priority INTEGER NOT NULL,
     state VARCHAR(16) NOT NULL,
     job_name VARCHAR(200),
     job_group VARCHAR(200),
-    is_nonconcurrent BOOLEAN,
-    requests_recovery BOOLEAN,
+    is_volatile BOOLEAN NOT NULL,
+    requests_recovery BOOLEAN NOT NULL,
     PRIMARY KEY (sched_name, entry_id)
 );
 

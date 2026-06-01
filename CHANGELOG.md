@@ -5,6 +5,22 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
+## [1.6.2] - 2026-06-01
+
+### Fixed
+- **CRÍTICO**: Schema Quartz incompatível (Quartz 2.x vs 1.7.x)
+  - Problema: Tabelas criadas com schema Quartz 2.x mas Pentaho usa Quartz 1.7.2
+  - Sintoma: "ERROR: column 'is_volatile' does not exist"
+  - Causa: Quartz 2.x removeu coluna `is_volatile`, mas Quartz 1.7.x ainda usa
+  - Solução: Atualizado SQL para schema Quartz 1.7.x com colunas corretas
+  - Mudanças:
+    * Adicionadas colunas `is_volatile` e `is_stateful` em QRTZ5_JOB_DETAILS
+    * Adicionada coluna `is_volatile` em QRTZ5_TRIGGERS e QRTZ5_FIRED_TRIGGERS
+    * Removida tabela QRTZ5_SIMPROP_TRIGGERS (não existe em Quartz 1.x)
+    * Removida coluna `sched_time` de QRTZ5_FIRED_TRIGGERS
+    * Ajustadas colunas `is_nonconcurrent` para Quartz 1.x
+  - Arquivos: `db_init_postgres/2_create_quartz_postgres.sql`
+
 ## [1.6.1] - 2026-06-01
 
 ### Fixed
