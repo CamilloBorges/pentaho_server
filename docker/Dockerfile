@@ -1,7 +1,7 @@
 # Pentaho Server Community Edition Docker Image  
-# Base: Debian Bullseye Slim with OpenJDK 11 JRE (compatible with Pentaho 9.4)
+# Base: Ubuntu 18.04 with OpenJDK 8 JRE (NATIVE version for Pentaho 9.4)
 
-FROM debian:bullseye-slim
+FROM ubuntu:18.04
 
 # Build arguments
 ARG PENTAHO_VERSION=9.4.0.0-343
@@ -12,23 +12,23 @@ ARG PENTAHO_GID=5000
 # Labels
 LABEL maintainer="Your Organization"
 LABEL version="${PENTAHO_VERSION}"
-LABEL description="Pentaho Server Community Edition with PostgreSQL and Java 11"
+LABEL description="Pentaho Server Community Edition with PostgreSQL and Java 8"
 
 # Environment variables
 ENV PENTAHO_HOME=/opt/pentaho/pentaho-server
 ENV PENTAHO_VERSION=${PENTAHO_VERSION}
 ENV CATALINA_HOME=${PENTAHO_HOME}/tomcat
-ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 ENV PATH=${JAVA_HOME}/bin:${PENTAHO_HOME}:${PATH}
 
 # Install required packages
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-        openjdk-11-jre-headless \
+        openjdk-8-jre-headless \
         wget \
         curl \
         unzip \
-        netcat-traditional \
+        netcat-openbsd \
         postgresql-client \
         ca-certificates \
         tzdata \

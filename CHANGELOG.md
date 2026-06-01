@@ -5,6 +5,18 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
+## [1.5.0] - 2026-06-01
+
+### Changed
+- **SOLUÇÃO FINAL**: Mudança para Java 8 (Ubuntu 18.04)
+  - Java 11, 17 e 21 TODOS incompatíveis com Pentaho 9.4 OSGI/Karaf
+  - Pentaho 9.4 foi construído especificamente para **Java 8**
+  - Mudança FROM `debian:bullseye-slim` → `ubuntu:18.04`
+  - Java 8 é a única versão testada e suportada oficialmente
+  - JAVA_HOME: `/usr/lib/jvm/java-8-openjdk-amd64`
+  - Package: `openjdk-8-jre-headless`
+  - Ubuntu 18.04 (última LTS com Java 8 nos repositórios oficiais)
+
 ## [1.4.0] - 2026-06-01
 
 ### Changed
