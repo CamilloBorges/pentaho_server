@@ -58,10 +58,12 @@ Adaptado da instalação Enterprise Edition disponível em: [Workshop--Installat
 ### Requisitos do Sistema
 
 - **SO**: Windows 10/11, Ubuntu 20.04+, macOS
-- **CPU**: 4+ núcleos recomendado
-- **RAM**: 8GB mínimo, 16GB recomendado
+- **CPU**: 2+ núcleos (4+ recomendado)
+- **RAM**: 4GB mínimo, 8GB+ recomendado
 - **Disco**: 10GB+ espaço disponível
 - **Portas**: 8080 (HTTP), 8443 (HTTPS), 5432 (PostgreSQL)
+
+📊 Para sistemas com recursos limitados, consulte: [SYSTEM_REQUIREMENTS.md](SYSTEM_REQUIREMENTS.md)
 
 ### Requisitos de Software
 

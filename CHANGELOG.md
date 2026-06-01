@@ -5,6 +5,28 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
+## [1.1.0] - 2024-06-01
+
+### Alterado
+- **Limites de CPU ajustados** para compatibilidade com sistemas de 2 núcleos
+  - Pentaho Server: 4 CPUs → 2 CPUs (limite)
+  - PostgreSQL: 2 CPUs → 1 CPU (limite)
+- **Requisitos de memória reduzidos** para melhor compatibilidade
+  - JVM mínima: 2048m → 1024m
+  - JVM máxima: 4096m → 2048m
+  - Limite container: 6G → 4G
+- Removido atributo `version` obsoleto dos arquivos docker-compose
+
+### Adicionado
+- [SYSTEM_REQUIREMENTS.md](SYSTEM_REQUIREMENTS.md) - Guia completo de requisitos e otimização
+- Configurações otimizadas para diferentes cenários (dev/teste/produção)
+- Guia de diagnóstico de problemas de recursos
+- Dicas de performance e tuning
+
+### Corrigido
+- Erro "range of CPUs is from 0.01 to 2.00" em sistemas com 2 CPUs
+- Warning sobre atributo `version` obsoleto no Docker Compose
+
 ## [1.0.1] - 2024-06-01
 
 ### Alterado
@@ -12,6 +34,9 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 - Motivo: Pentaho 10+ requer licença comercial; 9.4.0.0-343 é a última versão CE verdadeiramente open-source
 - Download agora via GitHub: https://github.com/ambientelivre/legacy-pentaho-ce/releases
 - Todos os arquivos de configuração e documentação atualizados para a nova versão
+
+### Adicionado
+- [VERSIONING.md](VERSIONING.md) - Explicação completa sobre versionamento e licenciamento
 
 ### Notas
 A versão 9.4.0.0-343 do Pentaho Server CE é a última versão totalmente livre antes da mudança de licenciamento. Versões 10+ são comerciais e requerem licença mesmo para a edição CE.

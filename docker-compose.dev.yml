@@ -7,8 +7,6 @@
 #   docker compose -f docker-compose.dev.yml up -d
 # =============================================================================
 
-version: '3.8'
-
 services:
   # PostgreSQL Database (igual ao production)
   postgres:
