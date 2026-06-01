@@ -8,11 +8,11 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 ## [1.3.0] - 2026-06-01
 
 ### Corrigido
-- **CRÍTICO**: Downgrade Java 21 → Java 11 para compatibilidade com Pentaho 9.4
+- **CRÍTICO**: Downgrade Java 21 → Java 17 para compatibilidade com Pentaho 9.4
   - Pentaho 9.4 foi desenvolvido para Java 8 e tem problemas graves com Java 21
   - OSGI/Karaf não inicializa no Java 21 (BundleException)
   - JCR (JackRabbit) falha ao inicializar no Java 21
-  - Java 11 LTS é totalmente compatível com Pentaho 9.4
+  - Java 17 LTS é compatível com Pentaho 9.4 (Java 11 não disponível no Debian Trixie)
 - Erro 404 causado por falha na inicialização do PentahoSystem
 
 ### Adicionado
@@ -24,8 +24,8 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 - Portas NGINX_HTTP_PORT e NGINX_HTTPS_PORT no .env
 
 ### Alterado
-- Dockerfile usa OpenJDK 11 ao invés de 21
-- Removida correção commons-pool (não necessária no Java 11)
+- Dockerfile usa OpenJDK 17 ao invés de 21
+- Removida correção commons-pool (não necessária no Java 17)
 
 ## [1.2.0] - 2026-06-01
 
